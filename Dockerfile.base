@@ -1,0 +1,7 @@
+FROM eclipse-temurin:17-jre-alpine
+
+COPY target/github-readme-scraper.jar /github-readme-scraper.jar
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
