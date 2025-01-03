@@ -4,7 +4,7 @@
 
     <groupId>com.mllukasik</groupId>
     <artifactId>github-readme-scraper</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <repositories>
         <repository>
@@ -20,7 +20,7 @@
     <scm>
         <connection>scm:git:https://x-access-token:${env.GITHUB_TOKEN}@github.com/mllukasik/github-readme-scraper.git</connection>
         <url>https://github.com/mllukasik/github-readme-scraper</url>
-        <tag>github-readme-scraper-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
