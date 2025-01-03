@@ -1,0 +1,18 @@
+name: 'github-readme-scraper'
+description: 'github-readme-scraper'
+inputs:
+  name:
+    description: 'Github account name'
+    required: true
+  output:
+    description: 'Output directory'
+    required: false
+    default: "build"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - -n
+    - ${{ inputs.name }}
+    - -o
+    - ${{ inputs.output }}
