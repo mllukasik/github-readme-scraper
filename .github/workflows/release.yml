@@ -1,0 +1,37 @@
+name: Create new github release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  maven-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ssh-key: ${{secrets.SSH_PRIVATE}}
+      - run: git config --global user.email "tvpozytyw@gmail.com"
+      - run: git config --global user.name "github-action"
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Maven release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ACTOR_NAME: ${{ github.actor }}
+        run: |
+          mvn -s $GITHUB_WORKSPACE/.github/workflows/maven-settings.xml -B release:prepare --file pom.xml -DtagNameFormat=v@{project.version}
+          echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+      - name: Release pushed tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$TAG" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="$TAG" \
+              --generate-notes
